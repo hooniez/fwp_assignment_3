@@ -1,7 +1,7 @@
 import {Form} from "react-bootstrap";
 
-export default function CategoryRadioButtons({setRadioChecked, setRadioVal, isInvalid}) {
-    const radios = [
+export default function CategoryRadioButtons({setCategoryChecked, setCategoryVal, isInvalid}) {
+    const categories = [
         {id: "formRecipeCategoryBreakfast", label: "breakfast",},
         {id: "formRecipeCategoryLunch", label: "lunch"},
         {id: "formRecipeCategoryAppetizer", label: "appetizer"},
@@ -9,22 +9,22 @@ export default function CategoryRadioButtons({setRadioChecked, setRadioVal, isIn
         {id: "formRecipeCategorySide", label: "side"},
         {id: "formRecipeCategoryDessert", label: "dessert"},
     ];
-    const checkRadio = (e) => {
-        setRadioChecked(true);
-        setRadioVal(e.target.value);
+    const checkCategory = (e) => {
+        setCategoryChecked(true);
+        setCategoryVal(e.target.value);
     };
     return (
         <>
-            {radios.map((radio, idx) => (
+            {categories.map((category, idx) => (
                 <Form.Check key={idx}
                             type="radio"
                             name="formRecipeCategory"
-                            id={radio.id}
-                            label={radio.label}
+                            id={category.id}
+                            label={category.label}
                             aria-required="true"
                             inline
-                            value={radio.label}
-                            onClick={checkRadio}
+                            value={category.label}
+                            onClick={checkCategory}
                             isInvalid={isInvalid}
                 />
             ))}
