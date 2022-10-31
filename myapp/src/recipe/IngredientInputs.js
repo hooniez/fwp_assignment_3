@@ -5,12 +5,17 @@ import {X} from "react-bootstrap-icons"
  * Component used to render input fields to specify an ingredient
  * @returns {JSX} the JSX code to render to the DOM tree
  */
-export default function IngredientInputs({idx, ingredients, setIngredients, ingredientsErrors}) {
+export default function IngredientInputs({idx, ingredients, setIngredients, ingredientsErrors, deleteIngredient}) {
     const handleInputChange = (e) => {
         setIngredients(Object.values({...ingredients, [idx]: {
             ...ingredients[idx],
                 [e.target.name]: e.target.value
         }}));
+    }
+
+    const deleteHandler = () => {
+        console.log(idx)
+        deleteIngredient(idx);
     }
 
     return (
@@ -26,7 +31,8 @@ export default function IngredientInputs({idx, ingredients, setIngredients, ingr
                               name="formIngredientName"
                               aria-required="true"
                               isInvalid={ingredientsErrors[idx].formIngredientName}
-                              onChange={handleInputChange}/>
+                              onChange={handleInputChange}
+                              value={ingredients[idx].formIngredientName}/>
                 <Form.Control.Feedback type="invalid">
                     {ingredientsErrors[idx].formIngredientName}
                 </Form.Control.Feedback>
@@ -42,7 +48,8 @@ export default function IngredientInputs({idx, ingredients, setIngredients, ingr
                               name="formIngredientAmount"
                               aria-required="true"
                               isInvalid={ingredientsErrors[idx].formIngredientAmount}
-                              onChange={handleInputChange}/>
+                              onChange={handleInputChange}
+                              value={ingredients[idx].formIngredientAmount}/>
                 <Form.Control.Feedback type="invalid">
                     {ingredientsErrors[idx].formIngredientAmount}
                 </Form.Control.Feedback>
@@ -51,7 +58,7 @@ export default function IngredientInputs({idx, ingredients, setIngredients, ingr
             <div
                 aria-labelledby="formIngredientDelete">
                 <span className="d-block mb-2 text-white" id="formIngredientDelete">Delete Ingredient</span>
-                <Button variant="danger"><X size={22}></X></Button>
+                <Button variant="danger" onClick={deleteHandler}><X size={22}></X></Button>
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
-import {Button, Form, Row} from 'react-bootstrap'
-import {useState, useRef} from "react";
+import {Button, Form} from 'react-bootstrap'
+import {useState, useEffect, useCallback} from "react";
 import IngredientInputs from "./IngredientInputs";
 import CategoryRadioButtons from "./CategoryRadioButtons";
 
@@ -33,57 +33,7 @@ export default function RecipeForm() {
     const [radioChecked, setRadioChecked] = useState(false);
     const [radioVal, setRadioVal ] = useState();
 
-    const handleInputChange = (e) => {
-        setRecipeFields({...recipeFields, [e.target.name]: e.target.value})
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const {trimmedFields, currentIngredients, isValid } = handleValidation();
-
-        if (!isValid)
-            return;
-
-        console.log(trimmedFields);
-        console.log(radioVal);
-        console.log(currentIngredients);
-    }
-
-    const handleValidation = () => {
-        // Recipe fields validation
-        const trimmedFields = trimFields();
-        const currentRecipeErrors = {};
-
-        let key = "formRecipeName";
-        let field = trimmedFields[key];
-        if (field.length === 0) {
-            currentRecipeErrors[key] = "Recipe name is required.";
-        }
-
-        key = "formRecipeDesc";
-        field = trimmedFields[key];
-        if (field.length === 0) {
-            currentRecipeErrors[key] = "Description is required.";
-        } else if (field.length > 100) {
-            currentRecipeErrors[key] = "Description can contain a maximum of 100 characters.";
-        }
-
-        key = "formRecipeSource";
-        field = trimmedFields[key];
-        if (field.length === 0) {
-            currentRecipeErrors[key] = "Source is required.";
-        } else if (!validSources.includes(field.toLowerCase())) {
-            currentRecipeErrors[key] = "Source should be any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend"
-        }
-
-        key = "formRecipeCategory";
-        if (!radioChecked) {
-            currentRecipeErrors[key] = "Category needs to be checked";
-        }
-
-        setRecipeErrors(currentRecipeErrors);
-
-        // Ingredients fields validation
+    const handleIngredientsFieldsValidation = useCallback(() => {
         let currentIngredients = [];
         let currentIngredientsErrors = [];
         let ingredientsFieldsValid = true;
@@ -118,21 +68,119 @@ export default function RecipeForm() {
 
             currentIngredientsErrors.push(currentErrors);
             currentIngredients.push(trimmedFields);
-
         })
+        return {currentIngredients, ingredientsFieldsValid, currentIngredientsErrors};
+    }, [ingredients]);
 
+    useEffect(() => {
+        const keyDownHandler = event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const { currentIngredientsErrors} = handleIngredientsFieldsValidation();
+
+                let isFilled = true;
+                currentIngredientsErrors.forEach(entry => {
+                    for (const [key, value] of Object.entries(entry)) {
+                        console.log(value);
+                        if (value.includes("required")) {
+                            isFilled = false;
+                        }
+                    }
+                })
+
+                if (isFilled) {
+                    setIngredients([...ingredients, {formIngredientName: "", formIngredientAmount: ""}])
+                    setIngredientsErrors([...ingredientsErrors, {}])
+                }
+
+
+
+            }
+        };
+
+        document.addEventListener('keydown', keyDownHandler);
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        }
+    }, [handleIngredientsFieldsValidation, ingredientsErrors, ingredients])
+
+    const handleRecipeInputChange = (e) => {
+        setRecipeFields({...recipeFields, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const {trimmedFields, currentIngredients, isValid } = handleValidation();
+
+        if (!isValid)
+            return;
+
+        console.log(trimmedFields);
+        console.log(radioVal);
+        console.log(currentIngredients);
+    }
+
+    const handleRecipeFieldsValidation = () => {
+        const trimmedRecipeFields = trimRecipeFields();
+        const currentRecipeErrors = {};
+
+        let key = "formRecipeName";
+        let field = trimmedRecipeFields[key];
+        if (field.length === 0) {
+            currentRecipeErrors[key] = "Recipe name is required.";
+        }
+
+        key = "formRecipeDesc";
+        field = trimmedRecipeFields[key];
+        if (field.length === 0) {
+            currentRecipeErrors[key] = "Description is required.";
+        } else if (field.length > 100) {
+            currentRecipeErrors[key] = "Description can contain a maximum of 100 characters.";
+        }
+
+        key = "formRecipeSource";
+        field = trimmedRecipeFields[key];
+        if (field.length === 0) {
+            currentRecipeErrors[key] = "Source is required.";
+        } else if (!validSources.includes(field.toLowerCase())) {
+            currentRecipeErrors[key] = "Source should be any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend"
+        }
+
+        key = "formRecipeCategory";
+        if (!radioChecked) {
+            currentRecipeErrors[key] = "Category needs to be checked";
+        }
+
+        return {trimmedRecipeFields, currentRecipeErrors}
+    }
+
+    const deleteIngredient = (idx) => {
+        let tempIngredients = ingredients;
+        let tempIngredientsErrors = ingredientsErrors;
+        tempIngredients.splice(idx, 1);
+        tempIngredientsErrors.splice(idx, 1);
+        setIngredients([...tempIngredients]);
+        setIngredientsErrors([...tempIngredientsErrors]);
+        console.log(tempIngredients);
+    }
+
+    const handleValidation = () => {
+        const {trimmedRecipeFields, currentRecipeErrors} = handleRecipeFieldsValidation();
+        setRecipeErrors(currentRecipeErrors);
+
+        const {currentIngredients, ingredientsFieldsValid, currentIngredientsErrors} = handleIngredientsFieldsValidation();
         setIngredientsErrors([...currentIngredientsErrors]);
         setIngredients([...currentIngredients]);
 
-        return {trimmedFields, currentIngredients,
+        return {trimmedRecipeFields, currentIngredients,
                 isValid: Object.keys(currentRecipeErrors).length === 0 && ingredientsFieldsValid};
     }
 
-    const trimFields = () => {
+    const trimRecipeFields = () => {
         const trimmedFields = {};
         Object.keys(recipeFields).map(key => trimmedFields[key] = recipeFields[key].trim());
         setRecipeFields(trimmedFields);
-
         return trimmedFields;
     }
 
@@ -150,7 +198,7 @@ export default function RecipeForm() {
                               name="formRecipeName"
                               aria-required="true"
                               value={recipeFields.formRecipeName}
-                              onChange={handleInputChange}
+                              onChange={handleRecipeInputChange}
                               isInvalid={recipeErrors.hasOwnProperty("formRecipeName")}/>
                 <Form.Control.Feedback type="invalid">
                     {recipeErrors.formRecipeName}
@@ -167,7 +215,7 @@ export default function RecipeForm() {
                               name="formRecipeDesc"
                               aria-required="true"
                               value={recipeFields.formRecipeDesc}
-                              onChange={handleInputChange}
+                              onChange={handleRecipeInputChange}
                               isInvalid={recipeErrors.hasOwnProperty("formRecipeDesc")}/>
                 <Form.Control.Feedback type="invalid">
                     {recipeErrors.formRecipeDesc}
@@ -185,7 +233,7 @@ export default function RecipeForm() {
                               name="formRecipeSource"
                               aria-required="true"
                               value={recipeFields.formRecipeSource}
-                              onChange={handleInputChange}
+                              onChange={handleRecipeInputChange}
                               isInvalid={recipeErrors.hasOwnProperty("formRecipeSource")}/>
                 <Form.Control.Feedback type="invalid">
                     {recipeErrors.formRecipeSource}
@@ -210,13 +258,15 @@ export default function RecipeForm() {
                  aria-labelledby="formRecipeIngredients"
             >
                 {/*Use span instead of label when there is no corresponding input tag*/}
-                <span id="formRecipeIngredients" className="d-block mb-2">Ingredients</span>
+                <span id="formRecipeIngredients" className="d-block">Ingredients</span>
+                <small className="mb-2">Fill all the fields below and enter to add another ingredient</small>
                 {ingredients.map((ingredient, idx) =>
                     <IngredientInputs key={idx}
                                       idx={idx}
                                       ingredients={ingredients}
                                       setIngredients={setIngredients}
-                                      ingredientsErrors={ingredientsErrors}/>)}
+                                      ingredientsErrors={ingredientsErrors}
+                                      deleteIngredient={deleteIngredient}/>)}
             </div>
             <Button variant="success" type="submit">Submit</Button>
         </Form>
