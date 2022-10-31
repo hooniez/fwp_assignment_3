@@ -12,12 +12,16 @@ export default function RecipeForm() {
     const [recipeFields, setRecipeFields] = useState({
         formRecipeName: "", formRecipeDesc: "", formRecipeSource: ""
     });
+    const [recipeErrors, setRecipeErrors] = useState({});
     const [ingredients, setIngredients] = useState([
-        {formIngredientName: "", formIngredientAmount: "", isInvalid: false},
-        {formIngredientName: "", formIngredientAmount: "", isInvalid: false},
+        {formIngredientName: "", formIngredientAmount: ""},
+        {formIngredientName: "", formIngredientAmount: ""},
     ]);
-    const [errors, setErrors] = useState({});
-    const sources = [
+    const [ingredientsErrors, setIngredientsErrors] = useState([
+        {}, {}
+    ]);
+
+    const validSources = [
         "cookbook",
         "cooking magazine",
         "website",
@@ -35,41 +39,93 @@ export default function RecipeForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const {trimmedFields, isValid } = handleValidation();
+        const {trimmedFields, currentIngredients, isValid } = handleValidation();
 
         if (!isValid)
             return;
+
+        console.log(trimmedFields);
+        console.log(radioVal);
+        console.log(currentIngredients);
     }
 
     const handleValidation = () => {
+        // Recipe fields validation
         const trimmedFields = trimFields();
-        const currentErrors = {};
+        const currentRecipeErrors = {};
 
         let key = "formRecipeName";
         let field = trimmedFields[key];
         if (field.length === 0) {
-            currentErrors[key] = "Recipe name is required.";
+            currentRecipeErrors[key] = "Recipe name is required.";
         }
 
         key = "formRecipeDesc";
         field = trimmedFields[key];
         if (field.length === 0) {
-            currentErrors[key] = "Description is required.";
+            currentRecipeErrors[key] = "Description is required.";
         } else if (field.length > 100) {
-            currentErrors[key] = "Description can contain a maximum of 100 characters.";
+            currentRecipeErrors[key] = "Description can contain a maximum of 100 characters.";
         }
 
         key = "formRecipeSource";
         field = trimmedFields[key];
         if (field.length === 0) {
-            currentErrors[key] = "Source is required.";
-        } else if (!sources.includes(field.toLowerCase())) {
-            currentErrors[key] = "Source should be any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend"
+            currentRecipeErrors[key] = "Source is required.";
+        } else if (!validSources.includes(field.toLowerCase())) {
+            currentRecipeErrors[key] = "Source should be any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend"
         }
 
-        setErrors(currentErrors);
+        key = "formRecipeCategory";
+        if (!radioChecked) {
+            currentRecipeErrors[key] = "Category needs to be checked";
+        }
 
-        return {trimmedFields, isValid: Object.keys(currentErrors).length === 0};
+        setRecipeErrors(currentRecipeErrors);
+
+        // Ingredients fields validation
+        let currentIngredients = [];
+        let currentIngredientsErrors = [];
+        let ingredientsFieldsValid = true;
+        ingredients.forEach((ingredient, idx) => {
+            const trimmedFields = {};
+            const currentErrors = {};
+            Object.keys(ingredient).map(key => trimmedFields[key] =
+                ingredient[key].trim());
+
+            let key = "formIngredientName";
+            let field = trimmedFields[key];
+            if (field.length === 0) {
+                currentErrors[key] = "Name is required";
+                ingredientsFieldsValid = false;
+            } else if (field.length > 20) {
+                currentErrors[key] = "Name of ingredient can contain a maximum of 20 characters";
+                ingredientsFieldsValid = false;
+            }
+
+            key = "formIngredientAmount";
+            field = trimmedFields[key];
+            if  (field.length === 0) {
+                currentErrors[key] = "Amount is required";
+                ingredientsFieldsValid = false;
+            } else if (!/^-*\d+$/.test(field)) {
+                currentErrors[key] = "Amount should contain only digits";
+                ingredientsFieldsValid = false;
+            } else if (Number(field) <= 0) {
+                currentErrors[key] = "Amount should contain a positive number";
+                ingredientsFieldsValid = false;
+            }
+
+            currentIngredientsErrors.push(currentErrors);
+            currentIngredients.push(trimmedFields);
+
+        })
+
+        setIngredientsErrors([...currentIngredientsErrors]);
+        setIngredients([...currentIngredients]);
+
+        return {trimmedFields, currentIngredients,
+                isValid: Object.keys(currentRecipeErrors).length === 0 && ingredientsFieldsValid};
     }
 
     const trimFields = () => {
@@ -95,9 +151,9 @@ export default function RecipeForm() {
                               aria-required="true"
                               value={recipeFields.formRecipeName}
                               onChange={handleInputChange}
-                              isInvalid={errors.hasOwnProperty("formRecipeName")}/>
+                              isInvalid={recipeErrors.hasOwnProperty("formRecipeName")}/>
                 <Form.Control.Feedback type="invalid">
-                    {errors.formRecipeName}
+                    {recipeErrors.formRecipeName}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -112,9 +168,9 @@ export default function RecipeForm() {
                               aria-required="true"
                               value={recipeFields.formRecipeDesc}
                               onChange={handleInputChange}
-                              isInvalid={errors.hasOwnProperty("formRecipeDesc")}/>
+                              isInvalid={recipeErrors.hasOwnProperty("formRecipeDesc")}/>
                 <Form.Control.Feedback type="invalid">
-                    {errors.formRecipeDesc}
+                    {recipeErrors.formRecipeDesc}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -130,9 +186,9 @@ export default function RecipeForm() {
                               aria-required="true"
                               value={recipeFields.formRecipeSource}
                               onChange={handleInputChange}
-                              isInvalid={errors.hasOwnProperty("formRecipeSource")}/>
+                              isInvalid={recipeErrors.hasOwnProperty("formRecipeSource")}/>
                 <Form.Control.Feedback type="invalid">
-                    {errors.formRecipeSource}
+                    {recipeErrors.formRecipeSource}
                 </Form.Control.Feedback>
                 <Form.Text>Type any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend</Form.Text>
 
@@ -143,7 +199,9 @@ export default function RecipeForm() {
                         aria-labelledby="formRecipeCategoryLabel"
             >
                 <span id="formRecipeCategoryLabel" className="d-block mb-2">Category</span>
-                <CategoryRadioButtons setRadioChecked={setRadioChecked} setRadioVal={setRadioVal}/>
+                <CategoryRadioButtons setRadioChecked={setRadioChecked}
+                                      setRadioVal={setRadioVal}
+                                      isInvalid={recipeErrors.hasOwnProperty("formRecipeCategory")}/>
 
             </Form.Group>
 
@@ -157,7 +215,8 @@ export default function RecipeForm() {
                     <IngredientInputs key={idx}
                                       idx={idx}
                                       ingredients={ingredients}
-                                      setIngredients={setIngredients}/>)}
+                                      setIngredients={setIngredients}
+                                      ingredientsErrors={ingredientsErrors}/>)}
             </div>
             <Button variant="success" type="submit">Submit</Button>
         </Form>
