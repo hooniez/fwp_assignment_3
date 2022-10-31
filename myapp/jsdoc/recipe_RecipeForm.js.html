@@ -1,4 +1,32 @@
-import {Button, Form} from 'react-bootstrap'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: recipe/RecipeForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: recipe/RecipeForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Button, Form} from 'react-bootstrap'
 import {useState, useEffect, useCallback, useRef} from "react";
 import IngredientInputs from "./IngredientInputs";
 import CategoryRadioButtons from "./CategoryRadioButtons";
@@ -43,12 +71,12 @@ import RecipeDetailsModal from "./RecipeDetailsModal";
  * to store the values of name, description, and source for the recipe
  * @property {{formRecipeName: string, formRecipeDesc: string, formRecipeSource: string}} recipeErrors - the object
  * to store the error messages for the following recipe fields: name, description, and source
- * @property {Array<{formIngredientName: string, formIngredientAmount: string}>} ingredients - the array to store
+ * @property {Array&lt;{formIngredientName: string, formIngredientAmount: string}>} ingredients - the array to store
  * ingredients
- * @property {Array<{formIngredientName: string, formIngredientAmount: string}>} ingredientsErrors - the array to
+ * @property {Array&lt;{formIngredientName: string, formIngredientAmount: string}>} ingredientsErrors - the array to
  * store error messages for ingredients
  * @property {Object} recipeForm - the object to reference the form tag
- * @property {Array<string>} validSources - the array that stores valid values for the source input
+ * @property {Array&lt;string>} validSources - the array that stores valid values for the source input
  * @property {boolean} recipeDetailsVisible - the boolean to set the visibility of the modal which contains the details of the recipe
  * @property {boolean} categoryChecked - the boolean to track whether the radio button for category is checked
  * @property {string} categoryVal - the string to store the value of the selected radio button for category
@@ -139,7 +167,7 @@ export default function RecipeForm() {
             } else if (!/^-*\d+$/.test(field)) {
                 currentErrors[key] = "Amount should contain only digits";
                 ingredientsFieldsValid = false;
-            } else if (Number(field) <= 0) {
+            } else if (Number(field) &lt;= 0) {
                 currentErrors[key] = "Amount should contain a positive number";
                 ingredientsFieldsValid = false;
             }
@@ -281,7 +309,7 @@ export default function RecipeForm() {
         setIngredients([...currentIngredients]);
 
         return {trimmedRecipeFields, currentIngredients,
-                isValid: Object.keys(currentRecipeErrors).length === 0 && ingredientsFieldsValid};
+                isValid: Object.keys(currentRecipeErrors).length === 0 &amp;&amp; ingredientsFieldsValid};
     }
 
     const trimRecipeFields = () => {
@@ -292,100 +320,122 @@ export default function RecipeForm() {
     }
 
     return (
-        <>
-            <Form onSubmit={handleSubmit} ref={recipeForm}>
+        &lt;>
+            &lt;Form onSubmit={handleSubmit} ref={recipeForm}>
                 {/*Name*/}
-                <Form.Group className="mb-3"
+                &lt;Form.Group className="mb-3"
                             aria-labelledby="formRecipeNameLabel"
                             controlId="formRecipeName"
                 >
-                    <Form.Label id="formRecipeNameLabel">Name</Form.Label>
-                    <Form.Control type="text"
+                    &lt;Form.Label id="formRecipeNameLabel">Name&lt;/Form.Label>
+                    &lt;Form.Control type="text"
                                   name="formRecipeName"
                                   aria-required="true"
                                   value={recipeFields.formRecipeName}
                                   onChange={handleRecipeInputChange}
                                   isInvalid={recipeErrors.hasOwnProperty("formRecipeName")}/>
-                    <Form.Control.Feedback type="invalid">
+                    &lt;Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeName}
-                    </Form.Control.Feedback>
-                </Form.Group>
+                    &lt;/Form.Control.Feedback>
+                &lt;/Form.Group>
 
                 {/*Description*/}
-                <Form.Group className="mb-3"
+                &lt;Form.Group className="mb-3"
                             aria-labelledby="formRecipeDescLabel"
                             controlId="formRecipeDesc"
                 >
-                    <Form.Label id="formRecipeDescLabel">Description</Form.Label>
-                    <Form.Control type="text"
+                    &lt;Form.Label id="formRecipeDescLabel">Description&lt;/Form.Label>
+                    &lt;Form.Control type="text"
                                   name="formRecipeDesc"
                                   aria-required="true"
                                   value={recipeFields.formRecipeDesc}
                                   onChange={handleRecipeInputChange}
                                   isInvalid={recipeErrors.hasOwnProperty("formRecipeDesc")}/>
-                    <Form.Control.Feedback type="invalid">
+                    &lt;Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeDesc}
-                    </Form.Control.Feedback>
-                </Form.Group>
+                    &lt;/Form.Control.Feedback>
+                &lt;/Form.Group>
 
                 {/*Source*/}
-                <Form.Group className="mb-3"
+                &lt;Form.Group className="mb-3"
                             aria-labelledby="formRecipeSourceLabel"
                             controlId="formRecipeSource"
                 >
-                    <Form.Label id="formRecipeSourceLabel">Source</Form.Label>
+                    &lt;Form.Label id="formRecipeSourceLabel">Source&lt;/Form.Label>
 
-                    <Form.Control type="text"
+                    &lt;Form.Control type="text"
                                   name="formRecipeSource"
                                   aria-required="true"
                                   value={recipeFields.formRecipeSource}
                                   onChange={handleRecipeInputChange}
                                   isInvalid={recipeErrors.hasOwnProperty("formRecipeSource")}/>
-                    <Form.Control.Feedback type="invalid">
+                    &lt;Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeSource}
-                    </Form.Control.Feedback>
-                    <Form.Text>Type any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend</Form.Text>
-                </Form.Group>
+                    &lt;/Form.Control.Feedback>
+                    &lt;Form.Text>Type any one of the values: cookbook, cooking magazine, website, family, newspaper, or friend&lt;/Form.Text>
+                &lt;/Form.Group>
 
                 {/*Category*/}
-                <Form.Group className="mb-3"
+                &lt;Form.Group className="mb-3"
                             aria-labelledby="formRecipeCategoryLabel"
                 >
-                    <span id="formRecipeCategoryLabel" className="d-block mb-2">Category</span>
-                    <CategoryRadioButtons setCategoryChecked={setCategoryChecked}
+                    &lt;span id="formRecipeCategoryLabel" className="d-block mb-2">Category&lt;/span>
+                    &lt;CategoryRadioButtons setCategoryChecked={setCategoryChecked}
                                           setCategoryVal={setCategoryVal}
                                           isInvalid={recipeErrors.hasOwnProperty("formRecipeCategory")}/>
 
-                </Form.Group>
+                &lt;/Form.Group>
 
                 {/*Ingredients*/}
-                <div className="mb-3"
+                &lt;div className="mb-3"
                      aria-labelledby="formRecipeIngredients"
                 >
                     {/*Use span instead of label when there is no corresponding input tag*/}
-                    <span id="formRecipeIngredients" className="d-block">Ingredients</span>
-                    <small className="mb-2">Fill all the fields below and enter to add another ingredient</small>
+                    &lt;span id="formRecipeIngredients" className="d-block">Ingredients&lt;/span>
+                    &lt;small className="mb-2">Fill all the fields below and enter to add another ingredient&lt;/small>
                     {ingredients.map((ingredient, idx) =>
-                        <IngredientInputs key={idx}
+                        &lt;IngredientInputs key={idx}
                                           idx={idx}
                                           ingredients={ingredients}
                                           setIngredients={setIngredients}
                                           ingredientsErrors={ingredientsErrors}
                                           deleteIngredient={deleteIngredient}/>)}
-                </div>
-                <Button variant="success" type="submit">Submit</Button>
-            </Form>
+                &lt;/div>
+                &lt;Button variant="success" type="submit">Submit&lt;/Button>
+            &lt;/Form>
 
             {/*Modal*/}
-            {recipeDetailsVisible && (
-                <RecipeDetailsModal recipeDetailsVisible={recipeDetailsVisible}
+            {recipeDetailsVisible &amp;&amp; (
+                &lt;RecipeDetailsModal recipeDetailsVisible={recipeDetailsVisible}
                                     hideModalHandler={hideModalHandler}
                                     recipeFields={recipeFields}
                                     categoryVal={categoryVal}
                                     ingredients={ingredients}/>
             )}
-        </>
+        &lt;/>
     );
 
 
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-CategoryRadioButtons.html">CategoryRadioButtons</a></li><li><a href="module-IngredientInputs.html">IngredientInputs</a></li><li><a href="module-RecipeDetailsModal.html">RecipeDetailsModal</a></li><li><a href="module-RecipeForm.html">RecipeForm</a></li><li><a href="module-useFetchImage.html">useFetchImage</a></li></ul><h3>Classes</h3><ul><li><a href="module-CategoryRadioButtons.html">CategoryRadioButtons</a></li><li><a href="module-IngredientInputs.html">IngredientInputs</a></li><li><a href="module-RecipeDetailsModal.html">RecipeDetailsModal</a></li><li><a href="module-useFetchImage.html">useFetchImage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue Nov 01 2022 09:27:24 GMT+1100 (Australian Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -2,10 +2,26 @@ import {Button, Form} from "react-bootstrap";
 import {X} from "react-bootstrap-icons"
 
 /**
- * Component used to render input fields to specify an ingredient
- * @returns {JSX} the JSX code to render to the DOM tree
+ * @module IngredientInputs
  */
-export default function IngredientInputs({idx, ingredients, setIngredients, ingredientsErrors, deleteIngredient}) {
+
+/**
+ * Component used to render input fields to specify an ingredient
+ * @param {Number} idx - the index of the ingredient element in the array ingredients
+ * @param {Array<object>} ingredients - the array that contains ingredient objects
+ * @param {function} setIngredients - the callback function to change the fields of the ingredient onChange
+ * @param {object} ingredientsErrors - the error messages for each field of an ingredient if any
+ * @param {function} deleteIngredient - the callback function to delete an ingredient row
+ * @returns {JSX.Element} - the JSX code to render to the DOM tree
+ * @constructor
+ */
+export default function IngredientInputs({idx,
+                                             ingredients,
+                                             setIngredients,
+                                             ingredientsErrors,
+                                             deleteIngredient
+}) {
+    // Change the value of an appropriate field in an ingredient row
     const handleInputChange = (e) => {
         setIngredients(Object.values({...ingredients, [idx]: {
             ...ingredients[idx],
@@ -13,8 +29,8 @@ export default function IngredientInputs({idx, ingredients, setIngredients, ingr
         }}));
     }
 
+    // Delete an ingredient row when a delete button is clicked
     const deleteHandler = () => {
-        console.log(idx)
         deleteIngredient(idx);
     }
 

@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: RecipeForm</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: RecipeForm</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~ComponentusedtorenderaUItocreatearecipeviatheformtag"><span class="type-signature">(inner) </span>Component used to render a UI to create a recipe via the form tag<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>recipeFields</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object
+to store the values of name, description, and source for the recipe</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>recipeErrors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object
+to store the error messages for the following recipe fields: name, description, and source</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ingredients</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;{formIngredientName: string, formIngredientAmount: string}></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the array to store
+ingredients</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ingredientsErrors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;{formIngredientName: string, formIngredientAmount: string}></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the array to
+store error messages for ingredients</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>recipeForm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the object to reference the form tag</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>validSources</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the array that stores valid values for the source input</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>recipeDetailsVisible</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the boolean to set the visibility of the modal which contains the details of the recipe</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>categoryChecked</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the boolean to track whether the radio button for category is checked</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>categoryVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the string to store the value of the selected radio button for category</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handleIngredientsFieldsValidation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function first trims all the values of the entries
+stored in ingredients and returns them in currentIngredients. It also returns ingredientsFieldsValid, with which
+the result of the validation can be quickly accessed. It also returns currentIngredientsErrors to store
+individual error message for each set of ingredient fields. All the returned values are stored inside an object
+and returned as an object.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handleRecipeInputChange</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">eventHandlerFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>When the user types in any of the following fields: name,
+description, and source, the corresponding state variable is updated with the value typed.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handleSubmit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">eventHandlerFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function validates all the required fields in the form. If
+not valid, display error messages set in handleValidation. Otherwise, save the recipe details in localStoage and
+make visible the modal that contains the recipe details as well as an image of the recipe fetched from Unsplash.
+triggered event.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hideModalHandler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">childComponentCallbackFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A callback function passed to the recipe details
+modal to call when the user clicks the close button, upon which the form and the states are reset.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handleRecipeFieldsValidation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">validationFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function first trims all the values of the
+following fields: name, description, and source and then returns the trimmed values in trimmedRecipeFields. It
+also returns currentRecipeErrors that contain an error message for each field if any.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>deleteIngredient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">childComponentDeleteCallbackFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback function is called from the
+component IngredientInputs to remove an ingredient row.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handleValidation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">validationFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>handleValidation calls handleRecipeFieldsValidation for the
+following fields: name, description, and source. It also calls handleIngredientsFieldsValidation to validate each
+row representing an ingredient.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trimRecipeFields</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">trimStringsInObjectFunction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The function trims potential whitespace found in the
+values typed by the user</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>the JSX code to render to the DOM tree</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    
+    <h4 class="name" id="~childComponentCallbackFunction"><span class="type-signature"></span>childComponentCallbackFunction<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>a callback function to pass to a child component to be called to update the corresponding state</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~childComponentDeleteCallbackFunction"><span class="type-signature"></span>childComponentDeleteCallbackFunction<span class="signature">(idx)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>a callback function to delete an element in an array whose state is managed in the parent component</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>idx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the index of the element to delete in the array</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~eventHandlerFunction"><span class="type-signature"></span>eventHandlerFunction<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the triggered event</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~trimStringsInObjectFunction"><span class="type-signature"></span>trimStringsInObjectFunction<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>a function to call to trim string values stored in recipeFields</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>an object that contains the trimmed values from recipeFields</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~validationFunction"><span class="type-signature"></span>validationFunction<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>a validation function to check the name, description, and source of the recipe being created</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="recipe_RecipeForm.js.html">recipe/RecipeForm.js</a>, <a href="recipe_RecipeForm.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>the results of the validation (whether it is valid and the trimmed feilds, etc)</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-CategoryRadioButtons.html">CategoryRadioButtons</a></li><li><a href="module-IngredientInputs.html">IngredientInputs</a></li><li><a href="module-RecipeDetailsModal.html">RecipeDetailsModal</a></li><li><a href="module-RecipeForm.html">RecipeForm</a></li><li><a href="module-useFetchImage.html">useFetchImage</a></li></ul><h3>Classes</h3><ul><li><a href="module-CategoryRadioButtons.html">CategoryRadioButtons</a></li><li><a href="module-IngredientInputs.html">IngredientInputs</a></li><li><a href="module-RecipeDetailsModal.html">RecipeDetailsModal</a></li><li><a href="module-useFetchImage.html">useFetchImage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Tue Nov 01 2022 09:27:24 GMT+1100 (Australian Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
