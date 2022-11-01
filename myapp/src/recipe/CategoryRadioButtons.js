@@ -21,6 +21,7 @@ import {Form} from "react-bootstrap";
 export default function CategoryRadioButtons({setCategoryChecked,
                                                  setCategoryVal,
                                                  isInvalid}) {
+    // An array used to render the radio buttons
     const categories = [
         {id: "formRecipeCategoryBreakfast", label: "breakfast",},
         {id: "formRecipeCategoryLunch", label: "lunch"},

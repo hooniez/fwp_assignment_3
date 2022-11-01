@@ -22,6 +22,7 @@ export default function RecipeDetailsModal({recipeDetailsVisible,
                                                categoryVal,
                                                ingredients
 }) {
+    // src: the state to contain the url of a fetched image
     const [src, setSrc] = useFetchImage(recipeFields['formRecipeName']);
 
     return (

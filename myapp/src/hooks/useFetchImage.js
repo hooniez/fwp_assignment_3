@@ -30,7 +30,6 @@ export default function useFetchImage(queryKeyword) {
                 perPage: 1,
             });
             // Set value to the url
-            console.log(res);
             setValue(res.response.results[0].urls.thumb);
         }
         getPhotoSrc();

@@ -79,6 +79,11 @@ import RecipeDetailsModal from "./RecipeDetailsModal";
  * @returns {JSX.Element} - the JSX code to render to the DOM tree
  */
 export default function RecipeForm() {
+    /*
+    recipeFields tracks the following fields: name, description, source
+    ingredients tracks the following fields: name, amount for each of the ingredients
+    categoryVal stores the value of the category selected
+     */
     const [recipeFields, setRecipeFields] = useState({
         formRecipeName: "", formRecipeDesc: "", formRecipeSource: ""
     });
@@ -90,10 +95,12 @@ export default function RecipeForm() {
     const [ingredientsErrors, setIngredientsErrors] = useState([
         {}, {}
     ]);
+    const [categoryChecked, setCategoryChecked] = useState(false);
+    const [categoryVal, setCategoryVal ] = useState(null);
+
     const recipeForm = useRef(null);
-
+    // Modal visibility
     const [recipeDetailsVisible, setRecipeDetailsVisible] = useState(false);
-
     const validSources = [
         "cookbook",
         "cooking magazine",
@@ -103,10 +110,12 @@ export default function RecipeForm() {
         "friend"
     ]
 
-    const [categoryChecked, setCategoryChecked] = useState(false);
-
-    const [categoryVal, setCategoryVal ] = useState(null);
-
+    /*
+     The function first trims all the values of the entries stored in ingredients and returns them in
+      currentIngredients. It also returns ingredientsFieldsValid, with which the result of the validation can be
+       quickly accessed. It also returns currentIngredientsErrors to store individual error message for each set of
+        ingredient fields. All the returned values are stored inside an object and returned as an object.
+     */
     const handleIngredientsFieldsValidation = useCallback(() => {
         let currentIngredients = [];
         let currentIngredientsErrors = [];
@@ -195,6 +204,11 @@ export default function RecipeForm() {
         setRecipeFields({...recipeFields, [e.target.name]: e.target.value})
     }
 
+    /*
+     The function validates all the required fields in the form. If not valid, display error messages set in
+      handleValidation. Otherwise, save the recipe details in localStorage and make visible the modal that contains
+       the recipe details as well as an image of the recipe fetched from Unsplash.
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
         const {isValid } = handleValidation();
@@ -225,6 +239,11 @@ export default function RecipeForm() {
         setRecipeDetailsVisible(false);
     }
 
+    /*
+     The function first trims all the values of the following fields: name, description, and source and then returns
+      the trimmed values in trimmedRecipeFields. It also returns currentRecipeErrors that contain an error message
+       for each field if any.
+     */
     const handleRecipeFieldsValidation = () => {
         const trimmedRecipeFields = trimRecipeFields();
         const currentRecipeErrors = {};
@@ -260,6 +279,9 @@ export default function RecipeForm() {
         return {trimmedRecipeFields, currentRecipeErrors}
     }
 
+    /*
+     The callback function is called from the component IngredientInputs to remove an ingredient row.
+     */
     const deleteIngredient = (idx) => {
         let tempIngredients = ingredients;
         let tempIngredientsErrors = ingredientsErrors;
@@ -270,6 +292,10 @@ export default function RecipeForm() {
         setIngredientsErrors([...tempIngredientsErrors]);
     }
 
+    /*
+     handleValidation calls handleRecipeFieldsValidation for the following fields: name, description, and source. It
+      also calls handleIngredientsFieldsValidation to validate each row representing an ingredient.
+     */
     const handleValidation = () => {
         // Validate the name, description, source, category
         const {trimmedRecipeFields, currentRecipeErrors} = handleRecipeFieldsValidation();
@@ -284,6 +310,7 @@ export default function RecipeForm() {
                 isValid: Object.keys(currentRecipeErrors).length === 0 && ingredientsFieldsValid};
     }
 
+    // The function trims potential whitespace found in the values typed by the user
     const trimRecipeFields = () => {
         const trimmedFields = {};
         Object.keys(recipeFields).map(key => trimmedFields[key] = recipeFields[key].trim());
