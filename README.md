@@ -7,9 +7,11 @@
 - All the dependencies listed in package.json in src
 ## How to run the project?
 - npm start in the root folder (myapp)
+## How to run the unit tests?
+- npm test in the root folder (my app) and press a to run all the tests
 ## Credits or references?
 - trimFields and the overall error checking mechanism from Week 8 Practical code
 ## How to generate JSDoc documentation?
 - Run the command in the root folder (myapp): gulp createDocs
 ## Where to find the generated documentation?
-- inside the jsdoc folder inside the root folder (myapp)
+- index.html inside the jsdoc folder inside the root folder (myapp)
