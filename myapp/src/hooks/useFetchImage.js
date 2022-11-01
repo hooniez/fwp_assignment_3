@@ -17,8 +17,8 @@ import {createApi} from 'unsplash-js';
 export default function useFetchImage(queryKeyword) {
     const [value, setValue] = useState(queryKeyword);
     const unsplash = createApi({
-        accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
-        secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY,
+        accessKey: "xmCyeWVEbCaXc3MP7IgFrCSEctakn1KIlCTLhC8kvVU",
+        secret: "y_e6oT2F0FR64ZYFZSSS2iGRWki-HPGYLytNQC1fZ2I",
     })
 
     // Fetch an image url
@@ -30,6 +30,7 @@ export default function useFetchImage(queryKeyword) {
                 perPage: 1,
             });
             // Set value to the url
+            console.log(res);
             setValue(res.response.results[0].urls.thumb);
         }
         getPhotoSrc();
