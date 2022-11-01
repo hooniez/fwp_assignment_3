@@ -124,23 +124,23 @@ export default function RecipeForm() {
             let key = "formIngredientName";
             let field = trimmedFields[key];
             if (field.length === 0) {
-                currentErrors[key] = "Name is required";
+                currentErrors[key] = "Name is required.";
                 ingredientsFieldsValid = false;
             } else if (field.length > 20) {
-                currentErrors[key] = "Name of ingredient can contain a maximum of 20 characters";
+                currentErrors[key] = "Name of ingredient can contain a maximum of 20 characters.";
                 ingredientsFieldsValid = false;
             }
 
             key = "formIngredientAmount";
             field = trimmedFields[key];
             if  (field.length === 0) {
-                currentErrors[key] = "Amount is required";
+                currentErrors[key] = "Amount is required.";
                 ingredientsFieldsValid = false;
             } else if (!/^-*\d+$/.test(field)) {
-                currentErrors[key] = "Amount should contain only digits";
+                currentErrors[key] = "Amount should contain only digits.";
                 ingredientsFieldsValid = false;
             } else if (Number(field) <= 0) {
-                currentErrors[key] = "Amount should contain a positive number";
+                currentErrors[key] = "Amount should contain a positive number.";
                 ingredientsFieldsValid = false;
             }
 
@@ -249,12 +249,12 @@ export default function RecipeForm() {
             currentRecipeErrors[key] = "Source is required.";
         } else if (!validSources.includes(field.toLowerCase())) {
             currentRecipeErrors[key] = "Source should be any one of the values: cookbook, cooking magazine, website," +
-                " family, newspaper, or friend"
+                " family, newspaper, or friend."
         }
 
         key = "formRecipeCategory";
         if (!categoryChecked) {
-            currentRecipeErrors[key] = "Category needs to be checked";
+            currentRecipeErrors[key] = "Category needs to be checked.";
         }
 
         return {trimmedRecipeFields, currentRecipeErrors}
@@ -305,7 +305,8 @@ export default function RecipeForm() {
                                   aria-required="true"
                                   value={recipeFields.formRecipeName}
                                   onChange={handleRecipeInputChange}
-                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeName")}/>
+                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeName")}
+                                  data-testid='recipe-name-input'/>
                     <Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeName}
                     </Form.Control.Feedback>
@@ -322,7 +323,8 @@ export default function RecipeForm() {
                                   aria-required="true"
                                   value={recipeFields.formRecipeDesc}
                                   onChange={handleRecipeInputChange}
-                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeDesc")}/>
+                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeDesc")}
+                                  data-testid='recipe-desc-input'/>
                     <Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeDesc}
                     </Form.Control.Feedback>
@@ -340,7 +342,8 @@ export default function RecipeForm() {
                                   aria-required="true"
                                   value={recipeFields.formRecipeSource}
                                   onChange={handleRecipeInputChange}
-                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeSource")}/>
+                                  isInvalid={recipeErrors.hasOwnProperty("formRecipeSource")}
+                                  data-testid='recipe-source-input'/>
                     <Form.Control.Feedback type="invalid">
                         {recipeErrors.formRecipeSource}
                     </Form.Control.Feedback>

@@ -49,11 +49,12 @@ export default function CategoryRadioButtons({setCategoryChecked,
                             value={category.label}
                             onClick={checkCategory}
                             isInvalid={isInvalid}
+
                 />
             ))}
             {isInvalid && (
                 <small className="text-danger d-block" type="invalid">
-                    Category needs to be checked
+                    Category needs to be selected.
                 </small>
             )}
         </>

@@ -48,7 +48,8 @@ export default function IngredientInputs({idx,
                               aria-required="true"
                               isInvalid={ingredientsErrors[idx].formIngredientName}
                               onChange={handleInputChange}
-                              value={ingredients[idx].formIngredientName}/>
+                              value={ingredients[idx].formIngredientName}
+                              data-testid={`ingredient-name-input${idx + 1}`}/>
                 <Form.Control.Feedback type="invalid">
                     {ingredientsErrors[idx].formIngredientName}
                 </Form.Control.Feedback>
@@ -65,7 +66,8 @@ export default function IngredientInputs({idx,
                               aria-required="true"
                               isInvalid={ingredientsErrors[idx].formIngredientAmount}
                               onChange={handleInputChange}
-                              value={ingredients[idx].formIngredientAmount}/>
+                              value={ingredients[idx].formIngredientAmount}
+                              data-testid={`ingredient-amount-input${idx + 1}`}/>
                 <Form.Control.Feedback type="invalid">
                     {ingredientsErrors[idx].formIngredientAmount}
                 </Form.Control.Feedback>
@@ -74,7 +76,9 @@ export default function IngredientInputs({idx,
             <div
                 aria-labelledby="formIngredientDelete">
                 <span className="d-block mb-2 text-white" id="formIngredientDelete">Delete Ingredient</span>
-                <Button variant="danger" onClick={deleteHandler}><X size={22}></X></Button>
+                <Button variant="danger"
+                        onClick={deleteHandler}
+                        data-testid={`ingredient-delete-button${idx + 1}`}><X size={22}></X></Button>
             </div>
         </div>
     )
