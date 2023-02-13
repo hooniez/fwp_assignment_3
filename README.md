@@ -1,5 +1,6 @@
-# Assessment 3 
-- This is a project created for the assessment 3.
+# fwp_assignment_3
+
+This assignment involves creating a ReactJS project for a recipe creation form. Client-side validation must be added to ensure that all fields are filled, the description does not exceed 100 characters, the source is one of several specified options, the ingredient name has a maximum of 20 characters, and the ingredient amount is a positive number. The form must also allow the user to add multiple ingredients, display the recipe details upon submission, and fetch an image of food via a REST API call. The recipe details must be saved in the local storage upon successful validation. The project must include two relevant unit tests and robust documentation generated using JSDoc or a suitable library. 
 
 ## How to install? 
 - Make sure the current directory is the root folder (myapp). Run npm install to download all the modules.
